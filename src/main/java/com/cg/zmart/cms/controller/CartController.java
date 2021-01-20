@@ -2,6 +2,7 @@ package com.cg.zmart.cms.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,7 @@ import com.cg.zmart.cms.model.CartItem;
 import com.cg.zmart.cms.service.CartServcie;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/cart")
 public class CartController {
 	
@@ -32,7 +34,7 @@ public class CartController {
 	}
 	
 	@DeleteMapping("/removeitem/{userId}/{productId}")
-	public ResponseEntity<?> removeCart(@PathVariable long userId, @PathVariable long productId){
+	public ResponseEntity<?> removeItem(@PathVariable long userId, @PathVariable long productId){
 		return ResponseEntity.ok(cartService.removeItem(userId, productId));
 	}
 	
@@ -41,8 +43,8 @@ public class CartController {
 		return ResponseEntity.ok(cartService.addItem(userId, cartItem));
 	}
 	
-	@PutMapping("/changequantity/{userId}/{productId}/{quantity}")
-	public ResponseEntity<?> changeQuantity(@PathVariable long userId, @PathVariable long productId, @PathVariable int quantity){
+	@PutMapping("/changequantity/{userId}/{productId}")
+	public ResponseEntity<?> changeQuantity(@PathVariable long userId, @PathVariable long productId, @RequestBody int quantity){
 		return ResponseEntity.ok(cartService.changeQuantity(userId, productId, quantity));
 	}
 

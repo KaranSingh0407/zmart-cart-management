@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.cg.zmart.cms.entity.CartEntity;
 import com.cg.zmart.cms.entity.CartItemEntity;
+import com.cg.zmart.cms.exception.CartException;
 import com.cg.zmart.cms.model.CartItem;
 import com.cg.zmart.cms.model.CartModel;
 import com.cg.zmart.cms.repository.CartRepository;
@@ -26,6 +27,7 @@ public class CartServiceImpl implements CartServcie{
 			cartItem.setPrice(cartItemEntity.getPrice());
 			cartItem.setProductId(cartItemEntity.getProductId());
 			cartItem.setQuantity(cartItemEntity.getQuantity());
+			cartItem.setProductName(cartItemEntity.getProductName());
 		}
 		
 		return cartItem;
@@ -51,12 +53,17 @@ public class CartServiceImpl implements CartServcie{
 			cartItemEntity.setPrice(cartItem.getPrice());
 			cartItemEntity.setProductId(cartItem.getProductId());
 			cartItemEntity.setQuantity(cartItem.getQuantity());
+			cartItemEntity.setProductName(cartItem.getProductName());
 		}
 		return cartItemEntity;
 	}
 
 	@Override
 	public CartModel viewCart(long userId) {
+		
+		if(!cartRepo.findById(userId).isPresent()) {
+			throw new CartException("User Id Does Not Exist");
+		}
 		
 		CartEntity cartEntity = cartRepo.findById(userId).get();
 		return toCartModel(cartEntity);
@@ -65,12 +72,12 @@ public class CartServiceImpl implements CartServcie{
 	@Override
 	public boolean removeItem(long userId, long productId) {
 
+		if(!cartRepo.findById(userId).isPresent()) {
+			throw new CartException("User Id Does Not Exist");
+		}
+		
 		CartEntity cartEntity = cartRepo.findById(userId).get();
 		
-		if(!cartRepo.findById(userId).isPresent()) {
-			//throw exception
-		}
-			
 		cartEntity.setCartItem(cartEntity.getCartItem().stream().
 				filter(item-> item.getProductId()!=productId).collect(Collectors.toList()));
 		cartRepo.save(cartEntity);
@@ -80,22 +87,37 @@ public class CartServiceImpl implements CartServcie{
 	@Override
 	public CartModel addItem(long userId, CartItem cartItem) {
 		
-		CartEntity cartEntity = cartRepo.findById(userId).get();
 		if(!cartRepo.findById(userId).isPresent()) {
-			//throw exception
+			throw new CartException("User Id Does Not Exist");
 		}
-		cartEntity.getCartItem().add(toCartItemEntity(cartItem));
+		
+		CartEntity cartEntity = cartRepo.findById(userId).get();
+		boolean flag = true;
+		
+		for(CartItemEntity cartItemEntity : cartEntity.getCartItem()) {
+			if(cartItemEntity.getProductId() == cartItem.getProductId()) {
+				cartItemEntity.setQuantity(cartItem.getQuantity()+1);
+				flag = false;
+				break;
+			}
+		}
+		if(flag) {
+			cartEntity.getCartItem().add(toCartItemEntity(cartItem));
+		}
+	
 		cartRepo.save(cartEntity);
 		return toCartModel(cartEntity);
 	}
 
 	@Override
 	public CartModel changeQuantity(long userId, long productId, int quantity) {
+		
+		if(!cartRepo.findById(userId).isPresent()) {
+			throw new CartException("User Id Does Not Exist");
+		}
+		
 		CartEntity cartEntity = cartRepo.findById(userId).get();
 		boolean flag = true;
-		if(!cartRepo.findById(userId).isPresent()) {
-			//throw exception
-		}
 		
 		for(CartItemEntity cartItemEntity : cartEntity.getCartItem()) {
 			if(cartItemEntity.getProductId() == productId) {
@@ -105,7 +127,7 @@ public class CartServiceImpl implements CartServcie{
 			}
 		}
 		if(flag) {
-			//throw exception
+			throw new CartException("Product Id not Found!");
 		}
 		return toCartModel(cartEntity);
 	}
@@ -114,7 +136,7 @@ public class CartServiceImpl implements CartServcie{
 	public boolean registerCart(long userId) {
 		
 		if(cartRepo.findById(userId).isPresent()) {
-			//throw exception
+			throw new CartException("User Id already registered Exist");
 		}
 		
 		CartEntity cartEntity = new CartEntity();

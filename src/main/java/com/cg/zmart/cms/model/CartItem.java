@@ -8,6 +8,8 @@ private long cartItemId;
 	private double price;
 	
 	private int quantity;
+	
+	private String productName;
 
 	public long getCartItemId() {
 		return cartItemId;
@@ -40,6 +42,14 @@ private long cartItemId;
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 
+	}
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
 	}
 	
 	

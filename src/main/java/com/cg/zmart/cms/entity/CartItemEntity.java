@@ -14,6 +14,8 @@ public class CartItemEntity {
 	
 	private long productId;
 	
+	private String productName;
+	
 	private double price;
 	
 	private int quantity;
@@ -48,6 +50,14 @@ public class CartItemEntity {
 
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
 	}
 	
 	
