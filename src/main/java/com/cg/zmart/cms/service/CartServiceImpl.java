@@ -67,7 +67,7 @@ public class CartServiceImpl implements CartServcie{
 
 		CartEntity cartEntity = cartRepo.findById(userId).get();
 		
-		if(cartRepo.findById(userId).isEmpty()) {
+		if(!cartRepo.findById(userId).isPresent()) {
 			//throw exception
 		}
 			
@@ -81,7 +81,7 @@ public class CartServiceImpl implements CartServcie{
 	public CartModel addItem(long userId, CartItem cartItem) {
 		
 		CartEntity cartEntity = cartRepo.findById(userId).get();
-		if(cartRepo.findById(userId).isEmpty()) {
+		if(!cartRepo.findById(userId).isPresent()) {
 			//throw exception
 		}
 		cartEntity.getCartItem().add(toCartItemEntity(cartItem));
@@ -93,7 +93,7 @@ public class CartServiceImpl implements CartServcie{
 	public CartModel changeQuantity(long userId, long productId, int quantity) {
 		CartEntity cartEntity = cartRepo.findById(userId).get();
 		boolean flag = true;
-		if(cartRepo.findById(userId).isEmpty()) {
+		if(!cartRepo.findById(userId).isPresent()) {
 			//throw exception
 		}
 		
@@ -113,7 +113,7 @@ public class CartServiceImpl implements CartServcie{
 	@Override
 	public boolean registerCart(long userId) {
 		
-		if(cartRepo.findById(userId)!=null) {
+		if(cartRepo.findById(userId).isPresent()) {
 			//throw exception
 		}
 		
