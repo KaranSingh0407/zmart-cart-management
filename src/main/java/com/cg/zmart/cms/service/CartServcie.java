@@ -16,4 +16,6 @@ public interface CartServcie {
 	
 	public CartModel changeQuantity(long userId, long productId, int quantity);
 	
+	public CartModel checkOut(long userId);
+	
 }

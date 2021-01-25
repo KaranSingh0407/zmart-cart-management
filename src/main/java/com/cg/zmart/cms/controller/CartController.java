@@ -47,5 +47,11 @@ public class CartController {
 	public ResponseEntity<?> changeQuantity(@PathVariable long userId, @PathVariable long productId, @RequestBody int quantity){
 		return ResponseEntity.ok(cartService.changeQuantity(userId, productId, quantity));
 	}
+	
+	@GetMapping("/checkout/{userId}")
+	public ResponseEntity<?> checkOut(@PathVariable long userId){
+		return ResponseEntity.ok(cartService.checkOut(userId));
+	}
+	
 
 }

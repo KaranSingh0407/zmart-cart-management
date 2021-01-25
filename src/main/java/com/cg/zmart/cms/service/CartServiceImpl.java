@@ -146,6 +146,20 @@ public class CartServiceImpl implements CartServcie{
 		return true;
 	}
 
+	@Override
+	public CartModel checkOut(long userId) {
+		
+		if(!cartRepo.findById(userId).isPresent()) {
+			throw new CartException("User Id Does Not Exist");
+		}
+		
+		CartEntity cartEntity = cartRepo.findById(userId).get();
+		
+		cartEntity.setCartItem(null);
+		
+		return toCartModel(cartRepo.save(cartEntity));
+	}
+;
 	
 	
 }
