@@ -16,7 +16,9 @@ public class CartItemEntity {
 	
 	private String productName;
 	
-	private double price;
+	private long price;
+	
+	private String imgUrl;
 	
 	private int quantity;
 
@@ -36,11 +38,13 @@ public class CartItemEntity {
 		this.productId = productId;
 	}
 
-	public double getPrice() {
+	
+
+	public long getPrice() {
 		return price;
 	}
 
-	public void setPrice(double price) {
+	public void setPrice(long price) {
 		this.price = price;
 	}
 
@@ -59,6 +63,15 @@ public class CartItemEntity {
 	public void setProductName(String productName) {
 		this.productName = productName;
 	}
+
+	public String getImgUrl() {
+		return imgUrl;
+	}
+
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
+	}
+	
 	
 	
 	

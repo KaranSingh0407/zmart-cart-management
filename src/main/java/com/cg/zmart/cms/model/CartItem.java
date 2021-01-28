@@ -5,11 +5,13 @@ private long cartItemId;
 	
 	private long productId;
 	
-	private double price;
+	private long price;
 	
 	private int quantity;
 	
 	private String productName;
+	
+	private String imgUrl;
 
 	public long getCartItemId() {
 		return cartItemId;
@@ -27,11 +29,13 @@ private long cartItemId;
 		this.productId = productId;
 	}
 
-	public double getPrice() {
+	
+
+	public long getPrice() {
 		return price;
 	}
 
-	public void setPrice(double price) {
+	public void setPrice(long price) {
 		this.price = price;
 	}
 
@@ -51,6 +55,16 @@ private long cartItemId;
 	public void setProductName(String productName) {
 		this.productName = productName;
 	}
+
+	public String getImgUrl() {
+		return imgUrl;
+	}
+
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
+	}
+	
+	
 	
 	
 }	

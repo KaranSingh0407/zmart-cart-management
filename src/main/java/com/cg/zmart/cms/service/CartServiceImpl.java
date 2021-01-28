@@ -28,6 +28,7 @@ public class CartServiceImpl implements CartServcie{
 			cartItem.setProductId(cartItemEntity.getProductId());
 			cartItem.setQuantity(cartItemEntity.getQuantity());
 			cartItem.setProductName(cartItemEntity.getProductName());
+			cartItem.setImgUrl(cartItemEntity.getImgUrl());
 		}
 		
 		return cartItem;
@@ -54,6 +55,7 @@ public class CartServiceImpl implements CartServcie{
 			cartItemEntity.setProductId(cartItem.getProductId());
 			cartItemEntity.setQuantity(cartItem.getQuantity());
 			cartItemEntity.setProductName(cartItem.getProductName());
+			cartItemEntity.setImgUrl(cartItem.getImgUrl());
 		}
 		return cartItemEntity;
 	}
